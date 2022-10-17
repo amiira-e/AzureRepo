@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@microsoft/signalr": "^6.0.10"
+    "@microsoft/signalr": "^6.0.10",
+    "@testing-library/jest-dom": "^5.16.5"
   }
 }
