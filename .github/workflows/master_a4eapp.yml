@@ -28,12 +28,11 @@ jobs:
       - name: Publish to folder
         run: msbuild AdtGaDemo.Web\AdtGaDemo.Web.csproj
         
-        
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: ASP-app
-          path: ADTDemo/**
+          path: models
 
   deploy:
     runs-on: windows-latest
@@ -46,7 +45,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
-          name: ADTDemo/**
+          name: models
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
