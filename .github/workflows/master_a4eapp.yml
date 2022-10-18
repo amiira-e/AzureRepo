@@ -27,14 +27,6 @@ jobs:
 
       - name: Publish to folder
         run: msbuild AdtGaDemo.Web\AdtGaDemo.Web.csproj
-      
-      - name: Create new folder
-        run: mkdir artifactfolder
-        
-      - name: Add artifacts
-        run: |
-           cd artifactfolder
-           echo 'alpha' > alpha.html
            
       - name: Upload artifact for deployment job
          uses:actions/upload-artifact@v2
