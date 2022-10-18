@@ -26,7 +26,8 @@ jobs:
         run: nuget restore
 
       - name: Publish to folder
-        run: msbuild "C:\Users\VE296WM\OneDrive - EY\Desktop\ADTDemo\AdtGaDemo.sln" 
+        run: msbuild AdtGaDemo.Web\AdtGaDemo.Web.csproj
+        
         
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
