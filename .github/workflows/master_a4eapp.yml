@@ -26,14 +26,13 @@ jobs:
         run: nuget restore
 
       - name: Publish to folder
-        run: msbuild AdtGaDemo.Web\AdtGaDemo.Web.csproj
-        
-        
+        run: msbuild /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\"
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: ASP-app
-          path: AdtGaDemo.Web\Models
+          path: '/published/**'
 
   deploy:
     runs-on: windows-latest
@@ -54,5 +53,5 @@ jobs:
         with:
           app-name: 'a4eApp'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EC09094894164E17BBF3429F6F6F08F9 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D362B499FC8747C69562688D257A10E3 }}
           package: .
