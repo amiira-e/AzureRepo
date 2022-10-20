@@ -47,7 +47,7 @@ jobs:
     needs: build
     environment:
       name: 'Production'
-      url: ${{ https://a4eapp.azurewebsites.net}}
+      url: https://a4eapp.azurewebsites.net
 
 
     steps:
