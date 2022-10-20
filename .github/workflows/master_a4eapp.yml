@@ -1,7 +1,11 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
+
+
 name: Build and deploy ASP app to Azure Web App - a4eApp
+
+
 
 on:
   push:
@@ -9,49 +13,67 @@ on:
       - master
   workflow_dispatch:
 
+
+
 jobs:
   build:
     runs-on: windows-latest
 
-    steps:
+
+
+   steps:
       - uses: actions/checkout@v2
 
-      - name: Setup MSBuild path
+
+
+     - name: Setup MSBuild path
         uses: microsoft/setup-msbuild@v1.0.2
 
-      - name: Setup NuGet
+
+
+     - name: Setup NuGet
         uses: NuGet/setup-nuget@v1.0.5
 
-      - name: Restore NuGet packages
+
+
+     - name: Restore NuGet packages
         run: nuget restore
 
-      - name: Publish to folder
-        run: msbuild /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\"
 
+
+     - name: Publish to folder
+        run: msbuild AdtGaDemo.Web\AdtGaDemo.Web.csproj
+        
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: ASP-app
-          path: '/published/**'
+          path: models
 
-  deploy:
+
+
+ deploy:
     runs-on: windows-latest
     needs: build
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
-    steps:
+
+
+   steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
-          name: ASP-app
+          name: models
 
-      - name: Deploy to Azure Web App
+
+
+     - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'a4eApp'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D362B499FC8747C69562688D257A10E3 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EC09094894164E17BBF3429F6F6F08F9 }}
           package: .
