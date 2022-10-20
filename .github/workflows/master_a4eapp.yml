@@ -62,7 +62,6 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
-          name: assets-for-download
           path: models
 
 
