@@ -51,17 +51,26 @@ jobs:
 
 
     steps:
-    - name: Download artifact from build job
-      uses: actions/download-artifact@v2
-      with:
-          name: models
+      - name: Create temporary folder
+        run: mkdir models
+        
+      - name: Add artifacts to publish to folder
+        run: |
+          cd models
+          echo 'alpha'  >alpha.html
+        
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: assets-for-download
+          path:models
 
 
 
-    - name: Deploy to Azure Web App
-      id: deploy-to-webapp
-      uses: azure/webapps-deploy@v2
-      with:
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
           app-name: 'a4eApp'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EC09094894164E17BBF3429F6F6F08F9 }}
