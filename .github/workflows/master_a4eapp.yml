@@ -19,40 +19,30 @@ jobs:
   build:
     runs-on: windows-latest
 
-
-
-   steps:
-      - uses: actions/checkout@v2
-
-
+    steps:
+     - uses: actions/checkout@v2
 
      - name: Setup MSBuild path
-        uses: microsoft/setup-msbuild@v1.0.2
-
-
+       uses: microsoft/setup-msbuild@v1.0.2
 
      - name: Setup NuGet
-        uses: NuGet/setup-nuget@v1.0.5
-
-
+       uses: NuGet/setup-nuget@v1.0.5
 
      - name: Restore NuGet packages
-        run: nuget restore
-
-
+       run: nuget restore
 
      - name: Publish to folder
-        run: msbuild AdtGaDemo.Web\AdtGaDemo.Web.csproj
+       run: msbuild AdtGaDemo.Web\AdtGaDemo.Web.csproj
         
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
-        with:
+     - name: Upload artifact for deployment job
+       uses: actions/upload-artifact@v2
+       with:
           name: ASP-app
           path: models
 
 
 
- deploy:
+  deploy:
     runs-on: windows-latest
     needs: build
     environment:
@@ -60,19 +50,18 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
 
-
-   steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v2
-        with:
+    steps:
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v2
+      with:
           name: models
 
 
 
-     - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
           app-name: 'a4eApp'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EC09094894164E17BBF3429F6F6F08F9 }}
