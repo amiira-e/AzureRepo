@@ -63,7 +63,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: assets-for-download
-          path:models
+          path: models
 
 
 
